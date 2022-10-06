@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 name: deep-learning
+=======
+name: xtopia-master
+>>>>>>> Stashed changes
 channels:
   - conda-forge
   - defaults
@@ -8,11 +12,9 @@ dependencies:
   - ipykernel
   - numpy
   - pandas
-  - tensorflow
-  - scikit-learn
   - matplotlib
   - seaborn
   - hvplot
   - pip
   - pip:
-    - mlflow
+    - fastapi
