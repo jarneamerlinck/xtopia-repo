@@ -13,7 +13,7 @@ dependencies:
   - matplotlib
   - seaborn
   - hvplot
-  - face_recognition
+  - deepface
   - pip
   - pip:
     - mlflow
