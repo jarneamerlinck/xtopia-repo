@@ -1,4 +1,4 @@
-name: deep-learning
+name: xtopia-webui
 channels:
   - conda-forge
   - defaults
@@ -8,11 +8,5 @@ dependencies:
   - ipykernel
   - numpy
   - pandas
-  - tensorflow
-  - scikit-learn
-  - matplotlib
-  - seaborn
-  - hvplot
+  - streamlit
   - pip
-  - pip:
-    - mlflow
