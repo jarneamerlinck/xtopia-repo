@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-name: deep-learning
-=======
 name: xtopia-master
->>>>>>> Stashed changes
 channels:
   - conda-forge
   - defaults
