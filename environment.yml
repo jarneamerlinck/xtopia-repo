@@ -8,7 +8,7 @@ dependencies:
   - ipykernel
   - numpy
   - pandas
-  - streamlit
+  - pytest
   - pip
   - pip:
     - streamlit
