@@ -16,5 +16,6 @@ dependencies:
   - seaborn
   - hvplot
   - pip
+  - pytest
   - pip:
     - fastapi
