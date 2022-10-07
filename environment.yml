@@ -14,6 +14,7 @@ dependencies:
   - seaborn
   - hvplot
   - deepface
+  - pytest
   - pip
   - pip:
     - mlflow
