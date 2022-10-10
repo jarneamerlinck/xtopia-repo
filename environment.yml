@@ -13,8 +13,9 @@ dependencies:
   - matplotlib
   - seaborn
   - hvplot
-  - deepface
   - pip
   - pip:
     - mlflow
     - opencv-python
+    - deepface
+
