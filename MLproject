@@ -1,0 +1,10 @@
+name: mlops-course
+
+conda_env: environment.yml
+
+entry_points:
+    train:
+        parameters:
+            mlflow_run: {type: int, default: 1}
+        command: "python train.py \
+                  --mlflow_run {mlflow_run}"

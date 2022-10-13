@@ -1,0 +1,28 @@
+name: xtopia-voice
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - ipython
+  - ipykernel
+  - numpy
+  - pandas
+  - scikit-learn>=0.19
+  - matplotlib
+  - seaborn
+  - hvplot
+  - pip
+  - pytest
+  - librosa
+  - pytorch
+  - tensorflow-gpu
+  - numba
+  - pyaudio
+  - pysoundfile
+  - pyyaml
+  - h5py
+  - pip:
+    - mlflow
+    - fastai
+
