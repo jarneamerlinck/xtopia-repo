@@ -1,0 +1,16 @@
+artifact_uri: ./mlruns/0/f10945458c8c4a28910117518deb7f47/artifacts
+deleted_time: 1665669011295
+end_time: 1665668592366
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+name: ''
+run_id: f10945458c8c4a28910117518deb7f47
+run_uuid: f10945458c8c4a28910117518deb7f47
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1665668336800
+status: 4
+tags: []
+user_id: eragon
