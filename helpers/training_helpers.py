@@ -5,6 +5,12 @@ import os
 import sys
 import re
 
+import mlflow
+from mlflow import log_metric, log_param, log_artifacts
+from mlflow.exceptions import MlflowException
+from mlflow.tracking import MlflowClient
+from mlflow.keras import log_model
+
 # Global vars
 
 FEATURES_PATH = "data/output/features.csv"
@@ -160,3 +166,85 @@ def classification_report_to_dataframe(report):
     dataframe = pd.DataFrame.from_dict(report_data)
     return dataframe, accuracy
 
+def train_with_mlflow(run_name, model, compile_kwargs, fit_kwargs, optional_params={}):
+  ''' 
+  <Parameters>
+  model: Keras model
+  compile_kwargs: dict training algo settings (e.g.optimizer, loss, metrics)
+  fit_kwargs: dict training data and hyper-parameters (e.g：trainin set, validation_split, epoch, batch_size, verbosity)
+  '''
+   
+  # use Context Manager to encapsulate an MLFlow run
+  with mlflow.start_run(run_name=run_name) as run:
+     
+    ##(1) initialize model
+    model = model()
+       
+    # supply training algo settings
+    model.compile(**compile_kwargs)
+     
+    # fit model, save training outputs to the "history" variable for tracking
+    history = model.fit(**fit_kwargs)
+     
+    ##(2) MLFlow tracking
+    for param_key, param_value in {**compile_kwargs, **fit_kwargs, **optional_params}.items():
+      if param_key not in ['x', 'y']:
+         
+        # use log_param() to track hyper-parameters (except training dataset x,y)
+        mlflow.log_param(param_key, param_value)
+     
+    for key, values in history.history.items():
+      for i, v in enumerate(values):
+         
+        # use log_metric() to track evaluation metrics
+        mlflow.log_metric(key, v, step=i)
+ 
+    for i, layer in enumerate(model.layers):
+       
+      # use log_param() to track model.layer (details of each CNN layer)
+      mlflow.log_param(f'hidden_layer_{i}_units', layer.output_shape)
+         
+    # use log_model() to track output Keras model (accessible through the MLFlow UI)
+    log_model(model, 'keras_model')
+   
+     
+    ##(3) sketch loss
+    fig = view_loss(history)
+     
+    # save loss picture, use log_artifact() to track it in MLFLow UI
+    fig.savefig('train-validation-loss.png')
+    mlflow.log_artifact('train-validation-loss.png')
+     
+    # return MLFLow run context
+    # this run variable contains the runID and experimentID that is essential to
+    # retrieving our training outcomes programatically
+    return run
+
+def model_summary_to_dataframe(model, args):
+    stringlist = []
+    model.summary(print_fn=lambda x: stringlist.append(x))
+    summ_string = "\n".join(stringlist)
+    print(summ_string) # entire summary in a variable
+
+    table = stringlist[1:-4][1::2] # take every other element and remove appendix
+
+    new_table = []
+    for entry in table:
+        entry = re.split(r'\s{2,}', entry)[:-1] # remove whitespace
+        new_table.append(entry)
+
+    df = pd.DataFrame(new_table[1:], columns=new_table[0])
+    number_of_current_layer = 0
+    columns = df.columns
+    for r in range(df.shape[0]):
+        f = df.iloc[r,0]
+        output_shape = df.iloc[r,1]
+        params = df.iloc[r,2]
+        print(f, output_shape, params)
+        if args.mlflow_run:
+            log_param(f"hidden_layer_{number_of_current_layer:03}_model",f)
+            log_param(f"hidden_layer_{number_of_current_layer:03}_shape",output_shape)
+            log_param(f"hidden_layer_{number_of_current_layer:03}_numer_of_params",params)
+            
+            number_of_current_layer+=1
+    

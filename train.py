@@ -46,10 +46,7 @@ if args.mlflow_run:
 def train_model(x_train, y_train):
     model_name = "NN_Sequential"
     model_version = "001"
-    if args.mlflow_run:
-        print('Tracking MLFlow params & metrics')
-        log_param('Layer_1',256)
-        
+            
     model = Sequential()
     model.add(Conv1D(256, 8, padding='same', input_shape=(x_train.shape[1],1))) 
     model.add(Activation('relu'))
@@ -157,6 +154,7 @@ def main():
     # Save our model weights and parameters
 
     save_model(model, model_name, model_version)
+    model_summary_to_dataframe(model, args)
 
 if __name__=='__main__':
     main()
