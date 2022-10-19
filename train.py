@@ -41,7 +41,7 @@ if args.mlflow_run:
 def train_model(x_train, y_train):
     model_name = "NN_Sequential"
     model_version = "001"
-            
+           
     model = Sequential()
     model.add(Conv1D(256, 8, padding='same', input_shape=(x_train.shape[1],1))) 
     model.add(Activation('relu'))
@@ -139,6 +139,7 @@ def main():
     #accuracy = model.evaluate(x_test, y_test)
     report, accuracy = classification_report_to_dataframe(classification_report(y_test, y_pred))
     print(report)
+    
     # Log output metrics
     if args.mlflow_run:
         print('Tracking MLFlow metrics')
@@ -150,6 +151,7 @@ def main():
 
     save_model(model, model_name, model_version)
     model_summary_to_MLFlow(model, model_name, model_version, args)
+    save_encoder(encoder)
 
 if __name__=='__main__':
     main()

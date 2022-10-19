@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
-import librosa
 import os
 import sys
 import re
+import pickle
 
 import mlflow
 from mlflow import log_metric, log_param, log_artifacts
@@ -11,10 +11,12 @@ from mlflow.exceptions import MlflowException
 from mlflow.tracking import MlflowClient
 from mlflow.keras import log_model
 from tensorflow import keras
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+
 # Global vars
-
 FEATURES_PATH = "data/output/features.csv"
-
+LABELS_PATH = "data/output/labels.csv"
+ENCODER_PICKLE = "data/backup/encoder.pkl"
 
 def save_model(model, name_of_model, file_name, dir="models"):
     checkpoint_path = f"{dir}/{name_of_model}/{file_name}.ckpt"
@@ -27,8 +29,7 @@ def load_model(name_of_model, file_name, dir="models"):
     checkpoint_path = f"{dir}/{name_of_model}/{file_name}.ckpt"
     model = keras.models.load_model(checkpoint_path)
     return model
-
-    
+   
 def classification_report_to_dataframe(report):
     report_data = []
     lines = report.split('\n')
@@ -83,4 +84,11 @@ def model_summary_to_MLFlow(model, model_name, model_version, args):
             log_param(f"hidden_layer_{number_of_current_layer:03}_numer_of_params",params)
             
             number_of_current_layer+=1
-    
+
+def save_encoder(encoder: OneHotEncoder):
+    with open(ENCODER_PICKLE, 'wb') as file:
+        pickle.dump(encoder, file)
+
+def load_encoder() -> OneHotEncoder:
+    pickle_off = open (ENCODER_PICKLE, "rb")
+    return pickle.load(pickle_off)
