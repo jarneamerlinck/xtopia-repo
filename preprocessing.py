@@ -9,8 +9,6 @@ from helpers.preprocessing_helpers import *
 # Main preprocessing function
 def main():
     # Read data
-    RAVDESS_PATH = "data/raw/RAVDESS/audio_speech_actors_01-24/"
-    CREMA_PATH = "data/raw/CREMA_D/AudioWAV/"
     ravdess_df = load_RAVDESS(RAVDESS_PATH)
     crema_df = load_CREMA(CREMA_PATH)
     # Inspect our result

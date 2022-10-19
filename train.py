@@ -21,11 +21,6 @@ import re
 
 from helpers.preprocessing_helpers import *
 from helpers.training_helpers import *
-## Model training
-
-
-## Model saving
-
 
 ## Parser arguments
 import argparse
@@ -154,7 +149,7 @@ def main():
     # Save our model weights and parameters
 
     save_model(model, model_name, model_version)
-    model_summary_to_dataframe(model, args)
+    model_summary_to_MLFlow(model, model_name, model_version, args)
 
 if __name__=='__main__':
     main()

@@ -10,7 +10,8 @@ if not sys.warnoptions:
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
 # Global vars
-
+RAVDESS_PATH = "data/raw/RAVDESS/audio_speech_actors_01-24/"
+CREMA_PATH = "data/raw/CREMA_D/AudioWAV/"
 DATA_PATH_FILE = "data/preprocessed/data_path.csv"
 DATA_PATH_PICKLE = "data/preprocessed/data_path.pkl"
 
