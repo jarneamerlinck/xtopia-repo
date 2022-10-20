@@ -13,5 +13,5 @@ dependencies:
   - hvplot
   - pip
   - pytest
+  - flask
   - pip:
-    - fastapi
