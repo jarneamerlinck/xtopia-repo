@@ -1,5 +1,6 @@
 import numpy as np
 from flask import Flask, redirect, render_template, request, app
+import paho.mqtt.client as mqtt
 
 app = Flask(__name__)
 
