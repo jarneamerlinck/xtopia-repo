@@ -12,7 +12,7 @@ def main():
     # Load our trained model from models/
     
     # Create predictions
-    
+    #model.evaluate
     # Print results
     
     # Save our predictions as csv

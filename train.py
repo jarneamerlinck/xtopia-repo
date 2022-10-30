@@ -82,6 +82,7 @@ def train_model(x_train, y_train):
 
 # Main function for training model on split train data and evaluating on validation data
 def main():
+    
     # Read preprocessed training data
     data_path = pd.read_pickle(DATA_PATH_PICKLE)
     

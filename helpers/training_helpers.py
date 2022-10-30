@@ -1,3 +1,4 @@
+from logging import exception
 import numpy as np
 import pandas as pd
 import os
@@ -12,6 +13,7 @@ from mlflow.tracking import MlflowClient
 from mlflow.keras import log_model
 from tensorflow import keras
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from urllib.parse import urlparse
 
 # Global vars
 FEATURES_PATH = "data/output/features.csv"
@@ -24,6 +26,12 @@ def save_model(model, name_of_model, file_name, dir="models"):
     if not os.path.exists(checkpoint_dir):
         os.makedirs(checkpoint_dir)
     model.save(checkpoint_path)
+    try:
+        racking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+        mlflow.tensorflow.log_model(model, "model")
+    except:
+        pass
+    
     
 def load_model(name_of_model, file_name, dir="models"):
     checkpoint_path = f"{dir}/{name_of_model}/{file_name}.ckpt"
