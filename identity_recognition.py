@@ -5,7 +5,7 @@ import os
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 
-path = 'Images'
+path = 'data/Images'
 images = []
 classNames = []
 classesList = os.listdir(path)
