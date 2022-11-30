@@ -14,4 +14,8 @@ dependencies:
   - pip
   - pytest
   - flask
+  - pydub
+  - librosa
+  - pyaudio
+  - gtts
   - pip:
